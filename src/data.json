@@ -1,0 +1,48 @@
+{
+  "items": [
+    {
+      "name": "Whey Protein",
+      "description": "Great protein buy why you can",
+      "price": 123,
+      "img": "prot.png",
+      "featured": true
+    },
+    {
+      "name": "Optimum Nutrition BCAA",
+      "description": "Optimum nutrition buy why you still can",
+      "price": 99,
+      "img": "bcaa.png",
+      "featured": true,
+      "bestSeller": true
+    },
+    {
+      "name": "Total War Pre-Workout",
+      "description": "Total war pre workout great pre-workout stuff",
+      "price": 333,
+      "img": "pretren.png",
+      "featured": true
+    },
+
+    {
+      "name": "Whey Protein 2",
+      "description": "Great protein buy why you can",
+      "price": 123,
+      "img": "prot.png",
+      "featured": true
+    },
+    {
+      "name": "Optimum Nutrition BCAA 2",
+      "description": "Optimum nutrition buy why you still can",
+      "price": 99,
+      "img": "bcaa.png",
+      "featured": true
+    },
+    {
+      "name": "Total War Pre-Workout 2",
+      "description": "Total war pre workout great pre-workout stuff",
+      "price": 333,
+      "img": "pretren.png",
+      "featured": true
+    }
+  ]
+}
