@@ -71,7 +71,24 @@ export const useStore = defineStore("store", {
   },
   actions: {
     add(product: Product) {
+      const orderIndex = this.basket.findIndex((x) => x.item.id === product.id);
+      if (orderIndex !== -1) {
+        this.basket[orderIndex].amount += 1;
+        return;
+      }
+
       this.basket.push({ item: product, amount: 1 });
+    },
+    remove(order: Order) {
+      this.basket = this.basket.filter((x) => x.item.id !== order.item.id);
+    },
+    amountChange(order: Order, amount: number) {
+      const orderIndex = this.basket.findIndex(
+        (x) => x.item.id === order.item.id
+      );
+      if (orderIndex !== -1) {
+        this.basket[orderIndex].amount = amount;
+      }
     },
   },
   persist: {

@@ -1,8 +1,15 @@
 <template>
   <div>
-    <v-icon class="shrink ml-2" @click="open">mdi-basket</v-icon>
-    <v-card v-show="isOpen" class="basket">
-      <v-row>
+    <v-icon class="shrink ml-2" @click="onClick">mdi-basket</v-icon>
+    <v-card
+      v-click-outside="{
+        handler: clickOutside,
+        closeConditional,
+      }"
+      v-show="isOpen"
+      class="basket"
+    >
+      <v-row v-show="!isBasketEmpty">
         <v-col cols="12">
           <OrderItem
             v-for="(order, index) in basket"
@@ -14,9 +21,13 @@
         </v-col>
       </v-row>
 
-      <v-card-actions class="mt-2">
+      <v-card-actions class="mt-2" v-show="!isBasketEmpty">
         <v-btn block>Confirm Order</v-btn>
       </v-card-actions>
+
+      <v-card-title v-show="isBasketEmpty">
+        Your basket is empty,pick something,don't be shy!
+      </v-card-title>
     </v-card>
   </div>
 </template>
@@ -38,12 +49,20 @@ import OrderItem from "./OrderItem";
 export default class Basket extends Vue {
   isOpen = false;
 
-  open() {
-    this.isOpen = true;
+  onClick() {
+    this.isOpen = !this.isOpen;
   }
 
-  close() {
+  clickOutside() {
     this.isOpen = false;
+  }
+
+  closeConditional(e) {
+    return this.isOpen !== false;
+  }
+
+  get isBasketEmpty() {
+    return !this.basket.length;
   }
 }
 </script>

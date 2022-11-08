@@ -16,6 +16,10 @@ const routes: Array<RouteConfig> = [
     name: "Shop",
     component: Shop,
   },
+  {
+    path: "*",
+    redirect: "/",
+  },
 ];
 
 const router = new VueRouter({
