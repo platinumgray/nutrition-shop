@@ -1,10 +1,18 @@
 <template>
   <v-container>
     <v-container class="hero">
-      <h2 class="text-h2 font-weight-medium">REACH YOUR MAXIMUM CAPACITY</h2>
-      <v-img src="@/assets/prot.png" max-width="300px" class="hover_img">
-      </v-img>
+      <v-row>
+        <v-col class="d-flex flex-column justify-center" col="10">
+          <h2 class="text-h2 font-weight-medium">
+            REACH YOUR MAXIMUM CAPACITY
+          </h2>
+        </v-col>
+        <v-col col="2" class="d-flex justify-center">
+          <v-img src="@/assets/prot.png" max-width="300px"> </v-img>
+        </v-col>
+      </v-row>
     </v-container>
+
     <v-container fluid>
       <v-row justify="center">
         <p>FEATURED PRODUCTS</p>
@@ -15,7 +23,7 @@
           v-for="item in featured"
           :key="item.name"
           :max-width="featuredSize"
-          :max-heigth="featuredSize"
+          :max-height="featuredSize"
         >
           <v-img
             :src="require(`@/assets/${item.img}`)"
@@ -24,16 +32,10 @@
             :height="featuredSize / 2"
             :width="featuredSize / 2"
           >
-            <v-card-title v-show="item.bestSeller">Best seller</v-card-title>
+            <v-card-title v-show="item.best">Best seller</v-card-title>
           </v-img>
         </v-card>
       </v-row>
-    </v-container>
-
-    <v-container class="hero">
-      <h2 class="text-h2 font-weight-medium">REACH YOUR MAXIMUM CAPACITY</h2>
-      <v-img src="@/assets/prot.png" max-width="300px" class="hover_img">
-      </v-img>
     </v-container>
 
     <v-container>
@@ -41,18 +43,16 @@
         <ShopItem
           v-for="item in proteins"
           v-bind:key="item.name"
-          :name="item.name"
-          :img="item.img"
-          :price="item.price"
+          :item="item"
+          class="ml-2 mt-2"
         />
       </PromoSection>
       <PromoSection name="BCAA" description="Lorem ipsum">
         <ShopItem
           v-for="item in proteins"
           v-bind:key="item.name"
-          :name="item.name"
-          :img="item.img"
-          :price="item.price"
+          :item="item"
+          class="ml-2 mt-2"
         />
       </PromoSection>
     </v-container>
@@ -76,9 +76,19 @@ export default class Home extends Vue {
     return 500;
   }
 
-  proteins = items.slice(0, 4);
+  get featured() {
+    const _fItems = items.filter((x) => x.featured && !x.best).slice(0, 3);
 
-  featured = items.filter((x) => x.featured).slice(0, 3);
+    const [_f1, _f2] = _fItems;
+    const _fBest = items.filter((x) => x.featured && x.best)[0];
+    if (_fBest) {
+      return [_f1, _fBest, _f2];
+    }
+
+    return _fItems;
+  }
+
+  proteins = items.slice(0, 4);
 }
 </script>
 
@@ -94,10 +104,6 @@ export default class Home extends Vue {
     line-height: 1;
     text-align: left;
   }
-}
-
-.hover_img {
-  background-position: right 35% bottom 45%;
 }
 
 @media screen and (min-width: 768) {
