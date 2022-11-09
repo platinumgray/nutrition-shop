@@ -53,7 +53,6 @@
 import { Component, Vue } from "vue-property-decorator";
 import ShopItem from "@/components/ShopItem.vue";
 import { useStore, Product } from "@/store";
-import { useRoute } from "vue-router/types/composables";
 
 @Component({
   components: { ShopItem },

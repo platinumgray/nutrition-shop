@@ -4,19 +4,17 @@
       <v-app-bar app color="primary">
         <div class="d-flex align-center">
           <router-link to="/">
-            <v-img
-              class="shrink mr-2"
-              contain
-              src="@/assets/logo.png"
-              transition="scale-transition"
-              width="40"
-            />
+            <v-img class="shrink mr-2" contain src="@/assets/logo.png" transition="scale-transition" width="40" />
           </router-link>
         </div>
 
         <v-spacer></v-spacer>
 
-        <v-autocomplete solo hideDetails />
+        <v-autocomplete solo hideDetails :items="products">
+          <template v-slot:item="{ item }">
+            <v-list-item link :to="'product/' + item.id">{{ item.name }}</v-list-item>
+          </template>
+        </v-autocomplete>
 
         <v-spacer></v-spacer>
         <div class="d-flex align-center">
@@ -31,12 +29,7 @@
       <v-footer dark padless>
         <v-card flat tile class="indigo lighten-1 white--text text-center">
           <v-card-text>
-            <v-btn
-              v-for="icon in icons"
-              :key="icon"
-              class="mx-4 white--text"
-              icon
-            >
+            <v-btn v-for="icon in icons" :key="icon" class="mx-4 white--text" icon>
               <v-icon size="24px">
                 {{ icon }}
               </v-icon>
@@ -68,6 +61,8 @@
 <script lang="ts">
 import Vue from "vue";
 import Basket from "@/components/Basket.vue";
+import { useStore, Product } from "@/store";
+
 
 export default Vue.extend({
   name: "App",
@@ -77,6 +72,13 @@ export default Vue.extend({
     //
   }),
   components: { Basket },
+  setup: () => {
+    const store = useStore();
+
+    return {
+      products: store.items
+    };
+  },
 });
 </script>
 
