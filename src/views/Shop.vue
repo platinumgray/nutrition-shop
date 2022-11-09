@@ -2,28 +2,19 @@
   <v-container fluid>
     <v-row justify="center" justify-sm="start">
       <v-col cols="12" sm="3">
-        <v-tabs
-          grow
-          right
-          show-arrows
-          v-model="source"
-          @change="$router.replace({ query: {} })"
-        >
+        <v-tabs grow right show-arrows :value="source" @change="changeSource">
           <v-tab v-for="tab in tabs" :key="tab.name">
             {{ tab.name }}
           </v-tab>
 
           <v-tab-item>
-            <v-list
-              v-model="predicate"
-              @change="$router.replace({ query: {} })"
-            >
-              <v-list-item-group v-model="predicate" color="primary">
-                <v-list-item
-                  v-for="c in brands"
-                  :key="c"
-                  @click="$router.replace({ query: {} })"
-                >
+            <v-list v-model="predicate">
+              <v-list-item-group
+                :value="predicate"
+                @change="changePredicate"
+                color="primary"
+              >
+                <v-list-item v-for="c in categories" :key="c">
                   <v-list-item-content>
                     <v-list-item-title>{{ c }}</v-list-item-title>
                   </v-list-item-content>
@@ -34,12 +25,12 @@
 
           <v-tab-item>
             <v-list v-model="predicate">
-              <v-list-item-group v-model="predicate" color="primary">
-                <v-list-item
-                  v-for="c in brands"
-                  :key="c"
-                  @click="$router.replace({ query: {} })"
-                >
+              <v-list-item-group
+                :value="predicate"
+                @change="changePredicate"
+                color="primary"
+              >
+                <v-list-item v-for="c in brands" :key="c">
                   <v-list-item-content>
                     <v-list-item-title>{{ c }}</v-list-item-title>
                   </v-list-item-content>
@@ -67,7 +58,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from "vue-property-decorator";
+import { Component, Vue, Watch } from "vue-property-decorator";
 import ShopItem from "@/components/ShopItem.vue";
 import { useStore, Product } from "@/store";
 
@@ -89,20 +80,30 @@ export default class Shop extends Vue {
   brands!: Array<string>;
   selection!: (s?: string, v?: string, q?: string) => Array<Product>;
 
+  q = "";
+  @Watch("$route.query.q")
+  public watchQ() {
+    this.q = String(this.$route.query.q);
+  }
+
   tabs = [
     { name: "Categories", key: "category", values: this.categories },
     { name: "Brands", key: "brand", values: this.brands },
   ];
 
   source = 0;
-  predicate = -1;
-
-  public get q(): string {
-    return String(this.$route.query.q || "");
+  changeSource(value: number) {
+    this.q = "";
+    this.source = value;
   }
 
-  constructor() {
-    super();
+  predicate = -1;
+  changePredicate(value: number) {
+    this.q = "";
+    this.predicate = value;
+  }
+
+  created() {
     const query = this.$route.query;
     if (query.category) {
       this.source = 0;

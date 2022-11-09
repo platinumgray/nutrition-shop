@@ -4,14 +4,26 @@
       <v-app-bar app color="primary">
         <div class="d-flex align-center">
           <router-link to="/">
-            <v-img class="shrink mr-2" contain src="@/assets/logo.png" transition="scale-transition" width="40" />
+            <v-img
+              class="shrink mr-2"
+              contain
+              src="@/assets/logo.png"
+              transition="scale-transition"
+              width="40"
+            />
           </router-link>
         </div>
 
         <v-spacer></v-spacer>
 
-        <v-text-field v-model="q" solo hideDetails dense @keyup="search($event)" />
-        <v-btn :to="'/shop?q=' + q">Search</v-btn>
+        <v-text-field
+          v-model="q"
+          solo
+          hideDetails
+          dense
+          @keyup="search($event)"
+        />
+        <v-btn :to="'/shop?q=' + q" @click="q = ''">Search</v-btn>
 
         <v-spacer></v-spacer>
         <div class="d-flex align-center">
@@ -26,7 +38,12 @@
       <v-footer dark padless>
         <v-card flat tile class="indigo lighten-1 white--text text-center">
           <v-card-text>
-            <v-btn v-for="icon in icons" :key="icon" class="mx-4 white--text" icon>
+            <v-btn
+              v-for="icon in icons"
+              :key="icon"
+              class="mx-4 white--text"
+              icon
+            >
               <v-icon size="24px">
                 {{ icon }}
               </v-icon>
@@ -79,7 +96,8 @@ export default Vue.extend({
   methods: {
     search(e: KeyboardEvent) {
       if (e.key === "Enter") {
-        this.$router.push(`/shop?q${this.q}`);
+        this.$router.push(`/shop?q=${this.q}`);
+        this.q = "";
       }
     },
   },
