@@ -61,19 +61,24 @@ export const useStore = defineStore("store", {
     brands: reduceFields(items, "brand"),
   }),
   getters: {
-    selection: (state) => (source: keyof Product, value: string) =>
-      state.items.filter((x) => {
+    selection: (state) => (source: keyof Product, value: string) => {
+      console.log("🚀 ~ file: index.ts ~ line 65 ~ value", value);
+      console.log("🚀 ~ file: index.ts ~ line 65 ~ source", source);
+      return state.items.filter((x) => {
         if (value) {
           return x[source] === value;
         }
         return true;
-      }),
+      });
+    },
   },
   actions: {
     add(product: Product) {
       const orderIndex = this.basket.findIndex((x) => x.item.id === product.id);
       if (orderIndex !== -1) {
-        this.basket[orderIndex].amount += 1;
+        if (this.basket[orderIndex].amount < 100) {
+          this.basket[orderIndex].amount += 1;
+        }
         return;
       }
 

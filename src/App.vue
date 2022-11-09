@@ -3,14 +3,15 @@
     <v-card class="overflow-hidden">
       <v-app-bar app color="primary">
         <div class="d-flex align-center">
-          <v-img
-            alt="Vuetify Logo"
-            class="shrink mr-2"
-            contain
-            src="@/assets/logo.png"
-            transition="scale-transition"
-            width="40"
-          />
+          <router-link to="/">
+            <v-img
+              class="shrink mr-2"
+              contain
+              src="@/assets/logo.png"
+              transition="scale-transition"
+              width="40"
+            />
+          </router-link>
         </div>
 
         <v-spacer></v-spacer>

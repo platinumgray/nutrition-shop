@@ -39,7 +39,11 @@
     </v-container>
 
     <v-container>
-      <PromoSection name="Proteins" description="Lorem ipsum">
+      <PromoSection
+        name="Proteins"
+        description="Lorem ipsum"
+        goTo="/shop?category=protein"
+      >
         <ShopItem
           v-for="item in proteins"
           v-bind:key="item.name"
@@ -47,7 +51,11 @@
           class="ml-2 mt-2"
         />
       </PromoSection>
-      <PromoSection name="BCAA" description="Lorem ipsum">
+      <PromoSection
+        name="BCAA"
+        description="Lorem ipsum"
+        goTo="/shop?brand=whey"
+      >
         <ShopItem
           v-for="item in proteins"
           v-bind:key="item.name"

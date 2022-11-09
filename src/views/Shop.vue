@@ -2,9 +2,10 @@
   <v-container fluid>
     <v-row justify="center" justify-sm="start">
       <v-col cols="12" sm="3">
-        <v-tabs grow right show-arrows>
-          <v-tab @change="onSelectList('category')">Categories</v-tab>
-          <v-tab @change="onSelectList('brand')">Brand</v-tab>
+        <v-tabs grow right show-arrows v-model="source">
+          <v-tab v-for="tab in tabs" :key="tab.name">
+            {{ tab.name }}
+          </v-tab>
 
           <v-tab-item>
             <v-list v-model="predicate">
@@ -52,12 +53,14 @@
 import { Component, Vue } from "vue-property-decorator";
 import ShopItem from "@/components/ShopItem.vue";
 import { useStore, Product } from "@/store";
+import { useRoute } from "vue-router/types/composables";
 
 @Component({
   components: { ShopItem },
 
   setup: () => {
     const store = useStore();
+
     return {
       selection: store.selection,
       categories: store.categories,
@@ -70,29 +73,34 @@ export default class Shop extends Vue {
   brands!: Array<string>;
   selection!: (s?: string, v?: string) => Array<Product>;
 
-  source = "category";
-  predicate = -1;
+  tabs = [
+    { name: "Categories", key: "category", values: this.categories },
+    { name: "Brands", key: "brand", values: this.brands },
+  ];
 
-  get refToSource() {
-    if (this.source === "category") {
-      return this.categories;
-    } else if (this.source === "brand") {
-      return this.brands;
+  source = 0;
+  predicate = -1;
+  constructor() {
+    super();
+    const query = this.$route.query;
+    if (query.category) {
+      this.source = 0;
+      this.predicate = this.categories.findIndex(
+        (x) => x.toLowerCase() === String(query.category).toLowerCase()
+      );
+    } else if (query.brand) {
+      this.source = 1;
+      this.predicate = this.brands.findIndex(
+        (x) => x.toLowerCase() === String(query.brand).toLowerCase()
+      );
     }
-    return [];
   }
 
   get items() {
-    return this.selection(this.source, this.refToSource[this.predicate]);
-  }
-
-  onSelectList(x: string) {
-    this.source = x;
-    this.predicate = -1;
-  }
-
-  onItemSelect(x: number) {
-    this.predicate = x;
+    return this.selection(
+      this.tabs[this.source].key,
+      this.tabs[this.source].values[this.predicate]
+    );
   }
 }
 </script>
