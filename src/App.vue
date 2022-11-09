@@ -10,11 +10,8 @@
 
         <v-spacer></v-spacer>
 
-        <v-autocomplete solo hideDetails :items="products">
-          <template v-slot:item="{ item }">
-            <v-list-item link :to="'product/' + item.id">{{ item.name }}</v-list-item>
-          </template>
-        </v-autocomplete>
+        <v-text-field v-model="q" solo hideDetails dense @keyup="search($event)" />
+        <v-btn :to="'/shop?q=' + q">Search</v-btn>
 
         <v-spacer></v-spacer>
         <div class="d-flex align-center">
@@ -63,12 +60,12 @@ import Vue from "vue";
 import Basket from "@/components/Basket.vue";
 import { useStore, Product } from "@/store";
 
-
 export default Vue.extend({
   name: "App",
 
   data: () => ({
     icons: [],
+    q: "",
     //
   }),
   components: { Basket },
@@ -76,8 +73,15 @@ export default Vue.extend({
     const store = useStore();
 
     return {
-      products: store.items
+      products: store.items,
     };
+  },
+  methods: {
+    search(e: KeyboardEvent) {
+      if (e.key === "Enter") {
+        this.$router.push(`/shop?q${this.q}`);
+      }
+    },
   },
 });
 </script>

@@ -2,15 +2,28 @@
   <v-container fluid>
     <v-row justify="center" justify-sm="start">
       <v-col cols="12" sm="3">
-        <v-tabs grow right show-arrows v-model="source">
+        <v-tabs
+          grow
+          right
+          show-arrows
+          v-model="source"
+          @change="$router.replace({ query: {} })"
+        >
           <v-tab v-for="tab in tabs" :key="tab.name">
             {{ tab.name }}
           </v-tab>
 
           <v-tab-item>
-            <v-list v-model="predicate">
+            <v-list
+              v-model="predicate"
+              @change="$router.replace({ query: {} })"
+            >
               <v-list-item-group v-model="predicate" color="primary">
-                <v-list-item v-for="c in categories" :key="c">
+                <v-list-item
+                  v-for="c in brands"
+                  :key="c"
+                  @click="$router.replace({ query: {} })"
+                >
                   <v-list-item-content>
                     <v-list-item-title>{{ c }}</v-list-item-title>
                   </v-list-item-content>
@@ -22,7 +35,11 @@
           <v-tab-item>
             <v-list v-model="predicate">
               <v-list-item-group v-model="predicate" color="primary">
-                <v-list-item v-for="c in brands" :key="c">
+                <v-list-item
+                  v-for="c in brands"
+                  :key="c"
+                  @click="$router.replace({ query: {} })"
+                >
                   <v-list-item-content>
                     <v-list-item-title>{{ c }}</v-list-item-title>
                   </v-list-item-content>
@@ -70,7 +87,7 @@ import { useStore, Product } from "@/store";
 export default class Shop extends Vue {
   categories!: Array<string>;
   brands!: Array<string>;
-  selection!: (s?: string, v?: string) => Array<Product>;
+  selection!: (s?: string, v?: string, q?: string) => Array<Product>;
 
   tabs = [
     { name: "Categories", key: "category", values: this.categories },
@@ -79,6 +96,11 @@ export default class Shop extends Vue {
 
   source = 0;
   predicate = -1;
+
+  public get q(): string {
+    return String(this.$route.query.q || "");
+  }
+
   constructor() {
     super();
     const query = this.$route.query;
@@ -98,7 +120,8 @@ export default class Shop extends Vue {
   get items() {
     return this.selection(
       this.tabs[this.source].key,
-      this.tabs[this.source].values[this.predicate]
+      this.tabs[this.source].values[this.predicate],
+      String(this.q)
     );
   }
 }

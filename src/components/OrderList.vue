@@ -14,7 +14,7 @@
 import { Component, Vue } from "vue-property-decorator";
 import { Order, useStore } from "@/store";
 import OrderItem from "./OrderItem.vue";
-import { mapActions, mapState } from "pinia";
+import { mapState } from "pinia";
 
 @Component({
   computed: {

@@ -61,14 +61,26 @@ export const useStore = defineStore("store", {
     brands: reduceFields(items, "brand"),
   }),
   getters: {
-    selection: (state) => (source: keyof Product, value: string) => {
-      console.log("🚀 ~ file: index.ts ~ line 65 ~ value", value);
-      console.log("🚀 ~ file: index.ts ~ line 65 ~ source", source);
+    selection: (state) => (source: keyof Product, value: string, q: string) => {
       return state.items.filter((x) => {
+        if (q) {
+          return (
+            x.name.toLowerCase().includes(q) ||
+            x.description.toLowerCase().includes(q)
+          );
+        }
         if (value) {
           return x[source] === value;
         }
         return true;
+      });
+    },
+    search: (state) => (q: string) => {
+      return state.items.filter((x) => {
+        return (
+          x.name.toLowerCase().includes(q) ||
+          x.description.toLowerCase().includes(q)
+        );
       });
     },
   },
