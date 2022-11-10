@@ -9,12 +9,12 @@
       <OrderList />
 
       <v-card-actions class="mt-2" v-show="!isBasketEmpty">
-        <v-btn block to="/order">Confirm Order</v-btn>
+        <v-btn block to="/order" color="primary">Confirm Order</v-btn>
       </v-card-actions>
 
-      <v-card-title v-show="isBasketEmpty">
+      <v-card-text v-show="isBasketEmpty">
         Your basket is empty,pick something,don't be shy!
-      </v-card-title>
+      </v-card-text>
     </v-card>
   </div>
 </template>

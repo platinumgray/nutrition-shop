@@ -1,13 +1,10 @@
 <template>
-  <v-row justify="start" direction="column" class="px-1 py-1">
-    <OrderItem
-      v-for="(order, index) in basket"
-      :order="order"
-      :key="order.item.name + index"
-      class="mx-3 mt-3 mb-3"
-      outlined
-    />
-  </v-row>
+  <v-container>
+    <v-row justify="start" direction="column" class="px-1 py-1">
+      <OrderItem v-for="(order, index) in basket" :order="order" :key="order.item.name + index" class="mx-3 mt-3 mb-3"
+        outlined />
+    </v-row>
+  </v-container>
 </template>
 
 <script lang="ts">
@@ -29,4 +26,6 @@ export default class extends Vue {
 }
 </script>
 
-<style scoped></style>
+<style scoped>
+
+</style>

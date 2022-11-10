@@ -83,7 +83,7 @@ export default class Shop extends Vue {
   q = "";
   @Watch("$route.query.q")
   public watchQ() {
-    this.q = String(this.$route.query.q);
+    this.q = String(this.$route.query.q || "");
   }
 
   tabs = [
@@ -116,7 +116,7 @@ export default class Shop extends Vue {
         (x) => x.toLowerCase() === String(query.brand).toLowerCase()
       );
     }
-    this.q = String(this.$route.query.q)
+    this.q = String(this.$route.query.q || "");
   }
 
   get items() {

@@ -20,8 +20,9 @@
       solo
       @input="_amountChange"
       @change="_amountChange"
+      light
     />
-    <v-btn @click="order && remove(order)"> Remove </v-btn>
+    <v-btn @click="order && remove(order)" color="secondary"> Remove </v-btn>
   </v-card>
 </template>
 
