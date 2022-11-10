@@ -116,6 +116,7 @@ export default class Shop extends Vue {
         (x) => x.toLowerCase() === String(query.brand).toLowerCase()
       );
     }
+    this.q = String(this.$route.query.q)
   }
 
   get items() {
