@@ -13,6 +13,11 @@
 
               <v-text-field v-model="email" :rules="emailRules" label="E-mail" required solo></v-text-field>
               <v-text-field v-model="phone" :rules="phoneRules" label="Phone" required solo></v-text-field>
+
+
+              <v-autocomplete v-model="warehouse" :items="items" :loading="isLoading" :search-input.sync="search"
+                item-text="fullAddress" label="Nova Poshta Warehouse" solo>
+              </v-autocomplete>
             </v-col>
             <v-col cols="7">
               <OrderList />
