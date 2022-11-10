@@ -1,22 +1,54 @@
 <template>
   <v-container>
     <v-sheet color="grey darken-1" class="py-3 px-3">
-      <v-form>
+      <v-form v-model="valid" lazy-validation>
         <v-container>
           <v-row>
             <v-col cols="5">
-              <v-text-field v-model="firstname" :rules="nameRules" :counter="10" label="First name" required solo>
+              <v-text-field
+                v-model="firstname"
+                :rules="nameRules"
+                :counter="10"
+                label="First name"
+                required
+                solo
+              >
               </v-text-field>
 
-              <v-text-field v-model="lastname" :rules="nameRules" :counter="10" label="Last name" required solo>
+              <v-text-field
+                v-model="lastname"
+                :rules="nameRules"
+                :counter="10"
+                label="Last name"
+                required
+                solo
+              >
               </v-text-field>
 
-              <v-text-field v-model="email" :rules="emailRules" label="E-mail" required solo></v-text-field>
-              <v-text-field v-model="phone" :rules="phoneRules" label="Phone" required solo></v-text-field>
+              <v-text-field
+                v-model="email"
+                :rules="emailRules"
+                label="E-mail"
+                required
+                solo
+              ></v-text-field>
+              <v-text-field
+                v-model="phone"
+                :rules="phoneRules"
+                label="Phone"
+                required
+                solo
+              ></v-text-field>
 
-
-              <v-autocomplete v-model="warehouse" :items="items" :loading="isLoading" :search-input.sync="search"
-                item-text="fullAddress" label="Nova Poshta Warehouse" solo>
+              <v-autocomplete
+                v-model="warehouse"
+                :items="items"
+                :loading="isLoading"
+                :search-input.sync="search"
+                item-text="fullAddress"
+                label="Nova Poshta Warehouse"
+                solo
+              >
               </v-autocomplete>
             </v-col>
             <v-col cols="7">
@@ -25,7 +57,9 @@
           </v-row>
         </v-container>
 
-        <v-btn color="primary" @click="submit"> Continue </v-btn>
+        <v-btn color="primary" @click="submit" :disabled="!canProceed">
+          Continue
+        </v-btn>
       </v-form>
     </v-sheet>
   </v-container>
@@ -86,6 +120,16 @@ export default class extends Vue {
     });
   }
 
+  get canProceed() {
+    return (
+      this.valid &&
+      this.firstname.length &&
+      this.lastname.length &&
+      this.email &&
+      this.phone && this.warehouse
+    );
+  }
+
   @Watch("search")
   watchSearch() {
     // Items have already been requested
@@ -116,13 +160,9 @@ export default class extends Vue {
   }
 
   submit() {
-    console.log(
-      this
-    )
+    console.log(this);
   }
 }
 </script>
 
-<style lang="scss" scoped>
-
-</style>
+<style lang="scss" scoped></style>
